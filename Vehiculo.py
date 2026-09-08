@@ -11,3 +11,13 @@ class Vehiculo:
         self.anio = anio
         # Atributo booleano protegido que indica si está en taller (por defecto True)
         self._en_taller = en_taller
+
+    # Método para registrar el ingreso del vehículo al taller mecánico
+    def ingresar(self) -> None:
+        # Cambia el valor del atributo _en_taller a True indicando que está en taller
+        self._en_taller = True
+
+    # Método para registrar la entrega o salida del vehículo del taller
+    def entregar(self) -> None:
+        # Cambia el valor del atributo _en_taller a False indicando que ya no está en taller
+        self._en_taller = False
