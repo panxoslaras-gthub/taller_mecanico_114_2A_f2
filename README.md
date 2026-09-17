@@ -1,68 +1,35 @@
-﻿# Taller Mecánico — Módulo 114-2A-F2
+# Taller Mecánico
 
-> Repositorio oficial y bitácora de actividades del módulo **Taller Mecánico (Sección 114-2A-F2)**.
+Repositorio para la asignatura de Programación Orientada a Objetos Seguro.
 
----
-
-## 📌 Información General
-
-| Campo | Detalle |
-| :--- | :--- |
-| **Módulo** | Taller Mecánico |
-| **Código / Sección** | 114-2A-F2 |
-| **Institución / Carrera** | Taller Mecánico Automotriz / Industrial |
-| **Docente a Cargo** | *[Nombre del Docente]* |
-| **Integrantes / Alumnos** | - *[Nombre Integrante 1]*<br>- *[Nombre Integrante 2]* |
-| **Período Académico** | 2026 |
+**Profesor:** Michael Arjel
+**Institución:** Inacap
 
 ---
 
-## 🎯 Objetivos del Módulo
+## Bitácora de Avances
 
-1. Aplicar procedimientos de diagnóstico, mantenimiento y reparación mecánica siguiendo estándares de seguridad vigentes.
-2. Registrar y documentar sistemáticamente los procesos, mediciones y hallazgos en cada sesión práctica mediante esta bitácora.
-3. Fomentar el trabajo colaborativo, orden y uso adecuado del herramental y equipos del taller.
+### 25 de Agosto de 2026
+- **Configuración Inicial:** Vinculación del directorio local con el repositorio de GitHub usando el CLI de GitHub (`gh auth`).
+- **Limpieza:** Se eliminó la versión antigua del archivo `vehiculo.py` para construir el proyecto desde cero.
+- **Clase Vehiculo (`vehiculo.py`):**
+  - Se creó la clase principal del proyecto.
+  - Se definieron los atributos privados `__patente`, `__anio` y `__en_taller` en el constructor, aplicando encapsulamiento y *type hints*.
+  - Se crearon los métodos `ingresar()` y `entregar()` con validación de estado.
+  - Se creó el método `tarifa_hora()` que retorna un valor fijo de 5000.
+- **Script de Pruebas (`main.py`):**
+  - Se creó el archivo de ejecución principal.
+  - Se importó la clase `Vehiculo` y se instanciaron 3 objetos con datos ficticios.
+  - Se probó la invocación de métodos y la impresión de la tarifa por hora en consola.
+- **Documentación:** Se comentaron todas las líneas de código en ambos archivos (`vehiculo.py` y `main.py`) explicando paso a paso su funcionamiento con fines educativos.
 
----
-
-## 🛡️ Normas de Seguridad y Buenas Prácticas
-
-- [x] Uso obligatorio de Elementos de Protección Personal (EPP): overol, calzado de seguridad, antiparras y guantes de protección.
-- [x] Mantener el área de trabajo limpia, despejada y ordenada antes, durante y después de la sesión.
-- [x] Inspección previa del instrumental y herramientas de precisión (torquímetros, micrómetros, etc.) antes de su uso.
-
----
-
-## 📅 Cronograma y Resumen de Sesiones
-
-| Sesión | Fecha | Actividad / Práctico | Estado | Observaciones / Firma |
-| :---: | :---: | :--- | :---: | :--- |
-| **01** | `DD/MM/2026` | Inducción de seguridad y reconocimiento de herramientas | ⏳ En progreso | Sesión inicial |
-| **02** | `DD/MM/2026` | Diagnóstico inicial y desmontaje de componentes | ⚪ Pendiente | — |
-| **03** | `DD/MM/2026` | Metrología aplicada y tolerancias | ⚪ Pendiente | — |
-| **04** | `DD/MM/2026` | Armado, torqueado y puesta a punto | ⚪ Pendiente | — |
-| **05** | `DD/MM/2026` | Pruebas de funcionamiento y evaluación final | ⚪ Pendiente | — |
-
----
-
-## 📝 Registro de Bitácora
-
-### Sesión 01: Inducción, Seguridad y Reconocimiento de Herramientas
-- **Fecha:** `DD/MM/2026`
-- **Responsables:** *[Nombres]*
-- **Herramientas y Equipos:** Banco de trabajo, juego de llaves combinadas, micrómetro, calibrador pie de rey, manual de taller.
-- **Descripción de Actividades:**
-  1. Revisión de protocolos de seguridad en el taller mecánico.
-  2. Inventario inicial de puestos de trabajo y verificación de instrumental.
-  3. Inicialización de la bitácora digital en el repositorio.
-- **Hallazgos / Dificultades:** *[Registrar observaciones o contingencias]*
-- **Medidas Correctivas / Solución:** *[Acciones tomadas]*
-- **Firma / Aprobación Docente:** `Pendiente de revisión`
-
----
-
-## 📊 Control de Evaluaciones y Entregas
-
-- [ ] **Hito 1:** Registro de inducción y mediciones iniciales.
-- [ ] **Hito 2:** Informe de diagnóstico intermedio y evidencia fotográfica.
-- [ ] **Hito 3:** Bitácora completa y reporte final del módulo.
+### 31 de Agosto de 2026
+- **Creación de Rama de Trabajo:** Creación y publicación de la rama `feature/desarrollo`.
+- **Implementación de Herencia (Subclases):**
+  - **Clase Auto (`auto.py`):** Hereda de `Vehiculo`, implementa su propio constructor invocando a `super()` y añade el atributo privado `__capacidad_maletero` (en litros).
+  - **Clase Moto (`moto.py`):** Hereda de `Vehiculo` (estructura base).
+  - **Clase Camion (`camion.py`):** Hereda de `Vehiculo`, implementa su propio constructor invocando a `super()` y añade el atributo privado `__capacidad_carga` (en kilos).
+- **Actualización de Script Principal (`main.py`):**
+  - Se importaron las subclases `Auto`, `Moto` y `Camion`.
+  - Se instanciaron objetos de cada una de las clases hijas y se verificó la invocación de métodos heredados (`ingresar()` y `tarifa_hora()`).
+- **Documentación:** Código comentado línea por línea con fines pedagógicos.
