@@ -1,11 +1,12 @@
+from typing import Optional
 from model.modelo import Modelo
 
 class Vehiculo: # Define la clase Vehiculo
-    def __init__(self, patente: str, anio: int, modelo: Modelo): # Constructor que recibe patente, año y modelo
+    def __init__(self, patente: str, anio: int, modelo: Optional[Modelo] = None): # Constructor que recibe patente, año y modelo (opcional)
         self.patente = patente # Asigna la patente mediante el setter para ejecutar la validación
         self.__anio: int = anio # Asigna el año recibido a un atributo privado
         self.__en_taller: bool = False # Inicializa el estado en False (no está en el taller por defecto) como privado
-        self.__modelo: Modelo = modelo
+        self.__modelo: Optional[Modelo] = modelo
 
     @property
     def modelo(self) -> Modelo:
