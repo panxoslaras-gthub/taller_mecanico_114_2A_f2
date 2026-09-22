@@ -1,7 +1,7 @@
 import sqlite3
-from marca import Marca
-from modelo import Modelo
-from auto import Auto
+from model.marca import Marca
+from model.modelo import Modelo
+from model.auto import Auto
 
 conexion = sqlite3.connect("taller.db")
 cursor = conexion.cursor()

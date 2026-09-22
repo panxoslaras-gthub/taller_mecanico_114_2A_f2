@@ -1,9 +1,9 @@
-from vehiculo import Vehiculo # Importa la clase base Vehiculo desde vehiculo.py
-from auto import Auto # Importa la clase Auto desde el archivo local auto.py
-from moto import Moto # Importa la clase Moto desde el archivo local moto.py
-from camion import Camion # Importa la clase Camion desde el archivo local camion.py
-from marca import Marca
-from modelo import Modelo
+from model.vehiculo import Vehiculo # Importa la clase base Vehiculo desde vehiculo.py
+from model.auto import Auto # Importa la clase Auto desde el archivo local auto.py
+from model.moto import Moto # Importa la clase Moto desde el archivo local moto.py
+from model.camion import Camion # Importa la clase Camion desde el archivo local camion.py
+from model.marca import Marca
+from model.modelo import Modelo
 
 # Instanciación de objetos de dependencias
 marca_toyota = Marca("Toyota")
