@@ -1,3 +1,4 @@
+import sqlite3
 from dao.dao import DAO
 from model.marca import Marca
 
@@ -9,10 +10,12 @@ class MarcaDAO(DAO):
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nombre TEXT NOT NULL)
         """)
+        self.conexion.commit()
 
     def insertar(self, marca:Marca): #insertar datos en la tabla
         self.cursor.execute("INSERT INTO marca (nombre) VALUES (?)",(marca.nombre,))
         marca.id = self.cursor.lastrowid
+        self.conexion.commit()
 
     def buscar(self, id):# Buscar por id de bd un dato
         self.cursor.execute("SELECT id, nombre FROM marca WHERE id = ?",(id,))
@@ -42,9 +45,13 @@ class MarcaDAO(DAO):
         return self.buscar(nueva_marca.id)
 
     def eliminar(self, id:int)->bool:
-        self.cursor.execute("DELETE FROM marca where id = ?", (id,))#elimino una marca 
-        self.conexion.commit()#confirmar y cerrar la transacción
-        return self.cursor.rowcount > 0 #Si o no osea true o false
+        try:
+            self.cursor.execute("DELETE FROM marca where id = ?", (id,))#elimino una marca 
+            self.conexion.commit()#confirmar y cerrar la transacción
+            return self.cursor.rowcount > 0 #Si o no osea true o false
+        except sqlite3.IntegrityError:
+            self.conexion.rollback()
+            return False
 
 
 

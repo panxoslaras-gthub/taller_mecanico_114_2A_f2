@@ -1,10 +1,26 @@
-from model.vehiculo import Vehiculo # Importa la clase base Vehiculo desde vehiculo.py
+from model.vehiculo import Vehiculo
 from model.modelo import Modelo
 
-class Camion(Vehiculo): # Define la clase Camion heredando de Vehiculo
-    def __init__(self, patente: str, anio: int, modelo: Modelo, capacidad_carga: int): # Constructor de Camion
-        super().__init__(patente, anio, modelo) # Llama al constructor de la clase padre Vehiculo para inicializar patente, año y modelo
-        self.__capacidad_carga: int = capacidad_carga # Guarda la capacidad de carga en kilos como atributo privado
+class Camion(Vehiculo):
+    def __init__(self, patente: str, anio: int, modelo: Modelo, capacidad_carga: int, en_taller: bool = False):
+        super().__init__(patente, anio, modelo, en_taller=en_taller)
+        self.__capacidad_carga: int = capacidad_carga
 
-    def tarifa_hora(self) -> int: # Método que sobrescribe la tarifa por hora para Camion
-        return 40000 # Retorna un valor fijo de 40000 para camion
+    @property
+    def capacidad_carga(self) -> int:
+        return self.__capacidad_carga
+
+    @capacidad_carga.setter
+    def capacidad_carga(self, valor: int) -> None:
+        self.__capacidad_carga = valor
+
+    def tarifa_hora(self) -> int:
+        return 40000
+
+    def __str__(self) -> str:
+        estado = "En taller" if self.en_taller else "Fuera de taller"
+        mod_nom = self.modelo.nombre if self.modelo else "Sin modelo"
+        return f"Camion(patente='{self.patente}', anio={self.anio}, modelo='{mod_nom}', carga={self.__capacidad_carga}kg, estado='{estado}')"
+
+    def __repr__(self) -> str:
+        return self.__str__()

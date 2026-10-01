@@ -73,9 +73,7 @@ def main():
                     print(f"Marca actual: {marca_existente.nombre}")
                     nuevo_nombre = input("Ingrese el nuevo nombre de la marca: ").strip()
                     if nuevo_nombre:
-                        marca_existente = Marca(nuevo_nombre) # Instancia nueva ya que no tenemos setter de nombre en el modelo
-                        marca_existente.id = id_actualizar
-                        
+                        marca_existente.nombre = nuevo_nombre
                         resultado = marca_dao.actualizar(marca_existente)
                         if resultado:
                             print(f"✅ Marca actualizada correctamente a: '{resultado.nombre}'")

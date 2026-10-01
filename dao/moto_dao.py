@@ -1,41 +1,35 @@
 import sqlite3
 from dao.vehiculo_dao import VehiculoDAO
-from model.auto import Auto
+from model.moto import Moto
 from model.modelo import Modelo
 from model.marca import Marca
 
-class AutoDAO(VehiculoDAO):
+class MotoDAO(VehiculoDAO):
     def crear_tabla(self):
         super().crear_tabla()
         self.cursor.execute("""
-            CREATE TABLE IF NOT EXISTS auto (
+            CREATE TABLE IF NOT EXISTS moto (
                 patente TEXT PRIMARY KEY,
-                capacidad_maletero INTEGER NOT NULL DEFAULT 0,
                 FOREIGN KEY (patente) REFERENCES vehiculo(patente)
             )
         """)
-        self.cursor.execute("PRAGMA table_info(auto)")
-        cols = [c[1] for c in self.cursor.fetchall()]
-        if "capacidad_maletero" not in cols:
-            self.cursor.execute("ALTER TABLE auto ADD COLUMN capacidad_maletero INTEGER NOT NULL DEFAULT 0")
         self.conexion.commit()
 
-    def insertar(self, auto: Auto) -> Auto:
-        super().insertar(auto)
+    def insertar(self, moto: Moto) -> Moto:
+        super().insertar(moto)
         self.cursor.execute(
-            "INSERT INTO auto (patente, capacidad_maletero) VALUES (?, ?)",
-            (auto.patente, auto.capacidad_maletero)
+            "INSERT INTO moto (patente) VALUES (?)",
+            (moto.patente,)
         )
         self.conexion.commit()
-        return auto
+        return moto
 
-    def buscar(self, patente: str) -> Auto | None:
+    def buscar(self, patente: str) -> Moto | None:
         self.cursor.execute("""
             SELECT v.patente, v.anio, v.en_taller, v.modelo_id,
-                   m.nombre AS modelo_nom, ma.id AS marca_id, ma.nombre AS marca_nom,
-                   a.capacidad_maletero
+                   m.nombre AS modelo_nom, ma.id AS marca_id, ma.nombre AS marca_nom
             FROM vehiculo v
-            JOIN auto a ON v.patente = a.patente
+            JOIN moto mo ON v.patente = mo.patente
             LEFT JOIN modelo m ON v.modelo_id = m.id
             LEFT JOIN marca ma ON m.marca_id = ma.id
             WHERE v.patente = ?
@@ -47,40 +41,34 @@ class AutoDAO(VehiculoDAO):
         if marca:
             marca.id = fila[5]
         modelo = Modelo(fila[4], marca, id=fila[3])
-        return Auto(fila[0], fila[1], modelo, capacidad_maletero=fila[7], en_taller=bool(fila[2]))
+        return Moto(fila[0], fila[1], modelo, en_taller=bool(fila[2]))
 
-    def listar(self) -> list[Auto]:
+    def listar(self) -> list[Moto]:
         self.cursor.execute("""
             SELECT v.patente, v.anio, v.en_taller, v.modelo_id,
-                   m.nombre AS modelo_nom, ma.id AS marca_id, ma.nombre AS marca_nom,
-                   a.capacidad_maletero
+                   m.nombre AS modelo_nom, ma.id AS marca_id, ma.nombre AS marca_nom
             FROM vehiculo v
-            JOIN auto a ON v.patente = a.patente
+            JOIN moto mo ON v.patente = mo.patente
             LEFT JOIN modelo m ON v.modelo_id = m.id
             LEFT JOIN marca ma ON m.marca_id = ma.id
             ORDER BY v.patente
         """)
-        autos = []
+        motos = []
         for fila in self.cursor.fetchall():
             marca = Marca(fila[6]) if fila[6] else None
             if marca:
                 marca.id = fila[5]
             modelo = Modelo(fila[4], marca, id=fila[3])
-            autos.append(Auto(fila[0], fila[1], modelo, capacidad_maletero=fila[7], en_taller=bool(fila[2])))
-        return autos
+            motos.append(Moto(fila[0], fila[1], modelo, en_taller=bool(fila[2])))
+        return motos
 
-    def actualizar(self, auto: Auto) -> Auto | None:
-        super().actualizar(auto)
-        self.cursor.execute(
-            "UPDATE auto SET capacidad_maletero = ? WHERE patente = ?",
-            (auto.capacidad_maletero, auto.patente)
-        )
-        self.conexion.commit()
-        return self.buscar(auto.patente)
+    def actualizar(self, moto: Moto) -> Moto | None:
+        super().actualizar(moto)
+        return self.buscar(moto.patente)
 
     def eliminar(self, patente: str) -> bool:
         try:
-            self.cursor.execute("DELETE FROM auto WHERE patente = ?", (patente,))
+            self.cursor.execute("DELETE FROM moto WHERE patente = ?", (patente,))
             self.cursor.execute("DELETE FROM vehiculo WHERE patente = ?", (patente,))
             self.conexion.commit()
             return self.cursor.rowcount > 0
